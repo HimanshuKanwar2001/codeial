@@ -10,6 +10,9 @@ router.get('/sign-in',usersController.signIn);
 
 
 
+router.post("/create",usersController.create);
+
+
 
 
 module.exports = router;
