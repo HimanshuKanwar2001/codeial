@@ -1,10 +1,29 @@
 const User=require('../models/user');
 
 
-module.exports.profile = function (req, res) {
-   return res.render("user_profiles", {
-     title: "Home",
-   });
+module.exports.profile = async function (req, res) {
+  try{
+
+    if (req.cookies.user_id) {
+      const user = await User.findById(req.cookies.user_id);
+      if(user){
+        return res.render('user_profiles',{
+          title:"User Profile",
+          user:user,
+        })
+      }
+    } else {
+      return res.redirect("/users/sign-in");
+    }
+    //  return res.render("user_profiles", {
+    //    title: "Home",
+    //  });
+
+  }catch(err){
+    console.err("Error :",err.message);
+    return res.status(500).send("Internal Server Error");
+  }
+  
 
 };
 
@@ -77,10 +96,11 @@ module.exports.createSession=async function(req,res){
       return res.status(500).send("Internal Server Error");
 
   }
+}
 
-
- 
-
-
+module.exports.signOut=function(req,res){
+  
+    res.clearCookie("user_id");
+    return res.redirect("/users/sign-in");
   
 }
