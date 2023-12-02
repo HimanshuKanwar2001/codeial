@@ -1,0 +1,31 @@
+header{
+    margin: 0;
+    padding: 0;
+.header-div{
+    display: flex;
+    
+    background-color: rgb(85, 85, 211);
+    justify-content: space-between;
+    #header-heading{
+        margin: 0;
+        font-size: 40px;
+        font-weight: 600;
+        color: white;
+    }
+    .sign-data{
+        display: flex;
+        width: 10%;
+        margin: 0;
+        font-size: 20px;
+        justify-content: space-evenly;
+        list-style-type: none;
+        align-items: center;
+        li{
+            a{
+                text-decoration: none;
+                color: white;
+            }
+        }
+    }
+}
+}

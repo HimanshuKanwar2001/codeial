@@ -1,0 +1,23 @@
+header {
+  margin: 0;
+  padding: 0; }
+  header .header-div {
+    display: flex;
+    background-color: #5555d3;
+    justify-content: space-between; }
+    header .header-div #header-heading {
+      margin: 0;
+      font-size: 40px;
+      font-weight: 600;
+      color: white; }
+    header .header-div .sign-data {
+      display: flex;
+      width: 10%;
+      margin: 0;
+      font-size: 20px;
+      justify-content: space-evenly;
+      list-style-type: none;
+      align-items: center; }
+      header .header-div .sign-data li a {
+        text-decoration: none;
+        color: white; }

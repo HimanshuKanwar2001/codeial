@@ -1,0 +1,21 @@
+footer {
+  background-color: grey;
+  height: 60px;
+  padding-top: 15px; }
+  footer .footer-details {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    width: 400px; }
+    footer .footer-details .footer-copyright-info {
+      color: white;
+      font-size: 20px;
+      margin: 0; }
+    footer .footer-details .redirect-links {
+      display: flex;
+      flex-direction: column;
+      color: white;
+      font-size: 20px; }
+      footer .footer-details .redirect-links a {
+        text-decoration: none;
+        color: white; }
