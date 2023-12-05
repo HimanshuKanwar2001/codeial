@@ -2,6 +2,7 @@
 
 <section id="'feed-posts">
   <h4>Posts</h4>
+  <% if(local.user){ %>
   <form action="/posts/create" id="new-post-form" method="Post">
     <textarea
       name="content"
@@ -11,6 +12,7 @@
     ></textarea>
     <input type="submit" value="Post" />
   </form>
+  <% } %>
   <div id="post-list-container">
     <ul>
         <% for(post of posts){ %>
