@@ -3,21 +3,33 @@ const User=require('../models/user');
 
 module.exports.profile = async function (req, res) {
    try{
-
      const user = await User.findById(req.params.id);
-
      return res.render("user_profiles", {
        title: "Home",
        profile_user:user
      });
-
-
    }catch(err){
     console.error(err);
     return res.status(500).send("Internal Server Error");
    }
 
 };
+
+module.exports.update=async function(req,res){
+   try{
+     if (req.user.id == req.params.id) {
+      const user=await User.findByIdAndUpdate(req.params.id,req.body);
+      return res.redirect('back');
+     }else{
+      return res.status(401).send('Unauthorized');
+     }
+
+
+   }catch(err){
+    console.error(err);
+    return res.status(500).send("Internal Server Error")
+   }
+}
 
 //render the sign up page
 module.exports.signUp=function(req,res){
