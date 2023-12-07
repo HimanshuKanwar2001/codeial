@@ -1,10 +1,21 @@
 const User=require('../models/user');
 
 
-module.exports.profile = function (req, res) {
-   return res.render("user_profiles", {
-     title: "Home",
-   });
+module.exports.profile = async function (req, res) {
+   try{
+
+     const user = await User.findById(req.params.id);
+
+     return res.render("user_profiles", {
+       title: "Home",
+       profile_user:user
+     });
+
+
+   }catch(err){
+    console.error(err);
+    return res.status(500).send("Internal Server Error");
+   }
 
 };
 

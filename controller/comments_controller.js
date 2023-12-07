@@ -25,10 +25,8 @@ module.exports.create = async function (req, res) {
 module.exports.destroy = async function (req, res) {
   try {
     const comment = await Comment.findById(req.params.id);
-     console.log("Comment :",comment.user);
     if (comment.user == req.user.id) {
       let postId = comment.post;
-      console.log(postId);
       await comment.deleteOne();
       const post = await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
