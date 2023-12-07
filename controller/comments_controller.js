@@ -4,7 +4,7 @@ const Post = require("../models/post");
 module.exports.create = async function (req, res) {
   try {
     const post = await Post.findById(req.body.post);
-    console.log("inside commnet controller", post);
+    // console.log("inside commnet controller", post);
     if (post) {
       const comment = await Comment.create({
         content: req.body.content,
@@ -24,14 +24,16 @@ module.exports.create = async function (req, res) {
 
 module.exports.destroy = async function (req, res) {
   try {
-    const comment = Comment.findById(req.params.id);
+    const comment = await Comment.findById(req.params.id);
+     console.log("Comment :",comment.user);
     if (comment.user == req.user.id) {
       let postId = comment.post;
-
+      console.log(postId);
+      await comment.deleteOne();
       const post = await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
-      return redirect("back");
+      return res.redirect("back");
     } else {
       return res.redirect("back");
     }

@@ -7,7 +7,7 @@ module.exports.create = async function (req, res) {
       content: req.body.content,
       user: req.user._id,
     });
-    console.log(user);
+    // console.log(user);
     return res.redirect("back");
   } catch (err) {
     console.error("Error : ", err.message);

@@ -22,7 +22,7 @@ module.exports.home = async function (req, res) {
       }
     }).exec();
     
-    console.log(posts);
+    // console.log(posts);
     res.render("home", {
       title: "Codeial | Home",
       posts: posts,
