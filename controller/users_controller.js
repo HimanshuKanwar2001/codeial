@@ -72,6 +72,7 @@ module.exports.create = async function (req, res) {
 
 //sign in and create a session for the user
 module.exports.createSession = function (req, res) {
+  req.flash("success", "Logged in Successfully");
   return res.redirect("/");
 };
 
@@ -80,6 +81,7 @@ module.exports.destroySession = function (req, res) {
     if (err) {
       return res.status(500).send("Error logging out");
     }
+    req.flash("success", "You have logged out!");
     // Redirect or send a response indicating successful logout
     res.redirect("/"); // You can replace this with your desired redirect or response
   });
