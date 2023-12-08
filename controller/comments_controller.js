@@ -14,10 +14,11 @@ module.exports.create = async function (req, res) {
 
       post.comments.push(comment);
       await post.save();
+      req.flash("success", "Comment Created!");
       res.redirect("/");
     }
   } catch (err) {
-    console.error(err);
+    req.flash("error", err);
     return res.status(500).send("Internal Server Error");
   }
 };
@@ -31,12 +32,13 @@ module.exports.destroy = async function (req, res) {
       const post = await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
+      req.flash("success", "Comment Deleted!");
       return res.redirect("back");
     } else {
       return res.redirect("back");
     }
   } catch (err) {
-    console.error(err);
+    req.flash("error", err);
     return res.status(500).send("Internal Server Error");
   }
 };

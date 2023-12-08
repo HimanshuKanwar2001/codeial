@@ -8,18 +8,20 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
+      passReqToCallback: true,
     },
-    async function (email, password, done) {
+    async function (req, email, password, done) {
       //find a user and establish the identity
       const user = await User.findOne({ email: email });
       try {
         if (!user || user.password != password) {
-          console.log("Invalid Username/Password");
-          return done(null, flase);
+          req.flash("error", "Invalid Username/Password");
+          return done(null, false);
         }
         return done(null, user);
       } catch (err) {
-        console.log("Error in finding user --> Passport", err);
+        req.flash("error", err);
+        // console.log("Error in finding user --> Passport", err);
         return done(err);
       }
     }
@@ -43,23 +45,23 @@ passport.deserializeUser(async function (id, done) {
 });
 
 //check if the user is authenticated
-passport.checkAuthentication=function(req,res,next){
+passport.checkAuthentication = function (req, res, next) {
   //if the user is signed in, then pass on the request to the next function(controller's action)
-  if(req.isAuthenticated()){
+  if (req.isAuthenticated()) {
     return next();
   }
 
   //if the user is not signed in
-  return res.redirect('/users/sign-in');
-}
+  return res.redirect("/users/sign-in");
+};
 
-passport.setAuthenticatedUser=function(req,res,next){
-  if(req.isAuthenticated()){
+passport.setAuthenticatedUser = function (req, res, next) {
+  if (req.isAuthenticated()) {
     //req.user contains the current signed in user from the session cookie and we are just sending this to the locals for the views
-    res.locals.user=req.user;
+    res.locals.user = req.user;
   }
 
   next();
-}
+};
 
-module.exports = passport; 
+module.exports = passport;

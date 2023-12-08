@@ -8,9 +8,10 @@ module.exports.create = async function (req, res) {
       user: req.user._id,
     });
     // console.log(user);
+    req.flash("success", "Post published!");
     return res.redirect("back");
   } catch (err) {
-    console.error("Error : ", err.message);
+    req.flash("error", err);
     return res.status(500).send("Internal Server Error");
   }
 };
@@ -23,12 +24,13 @@ module.exports.destroy = async function (req, res) {
     if (post.user == req.user.id) {
       await post.deleteOne();
       await Comment.deleteMany({ post: req.params.id });
+      req.flash("success", "Post and associated comments deleted!");
       return res.redirect("back");
     } else {
       return res.redirect("back");
     }
   } catch (err) {
-    console.error(err);
-    return res.status(500).send("Internal Server Error");
+    req.flash("error", err);
+    return res.redirect("back");
   }
 };
