@@ -11,8 +11,9 @@
         url: "/posts/create",
         data: newPostFrom.serialize(),
         success: function (data) {
-          let newPost=newPostDom(data.data.post);
-          $('#post-list-container>ul').prepend(newPost);
+          let newPost = newPostDom(data.data.post);
+          $("#post-list-container>ul").prepend(newPost);
+          deletePost($(" .delete-post-button", newPost));
         },
         error: function (error) {
           console.log(error.responseText);
@@ -26,7 +27,7 @@
     return $(`<li id="post-${post._id}">
   
   <small>
-    <a class="post-comments" href="/posts/destroy/${post.id}">X</a>
+    <a class="delete-post-button" href="/posts/destroy/${post._id}">X</a>
   </small>
    ${post.content}
   <br />
@@ -48,7 +49,7 @@
    
 
     <div class="post-comments-list">
-      <ul id="post-comments-${post.commets}}">
+      <ul id="post-comments-${post._id}}">
         
 
       </ul>
@@ -57,6 +58,25 @@
 </li>
 `);
   };
+
+  //method to delete a post from DOM
+  let deletePost = function (deleteLink) {
+    $(deleteLink).click(function (e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "get",
+        url: $(deleteLink).prop("href"),
+        success: function (data) {
+          $(`#post-${data.data.post_id}`).remove();
+        },
+        error: function (error) {
+          console.log(error.responseText);
+        },
+      });
+    });
+  };
+  
 
   createPost();
 }
