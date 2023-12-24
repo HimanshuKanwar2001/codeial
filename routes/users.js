@@ -22,4 +22,7 @@ router.post(
 
 router.get('/sign-out',usersController.destroySession);
 
+
+
+
 module.exports = router;
